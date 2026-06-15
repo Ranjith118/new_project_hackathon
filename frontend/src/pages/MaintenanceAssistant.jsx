@@ -536,26 +536,25 @@ ${liveCtx}`
 
   const clearChat = () => { setMessages([]); setConvState({}); setActiveIntent(null); setCollectedData({}); };
 
-  // Calculate left offset — sidebar is w-64 = 256px
   return (
-    <div className="flex flex-col overflow-hidden fixed top-0 right-0 bottom-0" style={{ left: '256px' }}>
+    <div className="flex flex-col h-full overflow-hidden">
 
       {/* TOP BAR */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-[#0F1419] border-b border-[#334155] flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center flex-shrink-0">
-            <Brain className="w-4 h-4 text-white" />
+      <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 bg-[#0F1419] border-b border-[#334155] flex-shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center flex-shrink-0">
+            <Brain className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
           </div>
-          <div>
-            <h1 className="text-sm font-heading font-bold text-white leading-tight">AI Maintenance Assistant</h1>
+          <div className="min-w-0">
+            <h1 className="text-xs sm:text-sm font-heading font-bold text-white leading-tight truncate">AI Maintenance Assistant</h1>
             <div className="flex items-center gap-1.5 text-[10px] text-slate-400">
-              <div className={`w-1.5 h-1.5 rounded-full ${ctxLoading?'bg-yellow-500 animate-pulse':'bg-green-500 animate-pulse'}`} />
-              {ctxLoading ? 'Refreshing live data...' : 'Live · Updates every 3s · LLaMA 70B'}
+              <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${ctxLoading?'bg-yellow-500 animate-pulse':'bg-green-500 animate-pulse'}`} />
+              <span className="truncate">{ctxLoading ? 'Refreshing...' : 'Live · LLaMA 70B'}</span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1 sm:gap-1.5 flex-shrink-0">
           <div className="hidden lg:flex items-center gap-1 mr-1">
             {QUICK_ACTIONS.slice(0,5).map(({ icon:Icon, label, prompt, color }) => (
               <button key={label} onClick={() => send(prompt)}
@@ -565,24 +564,24 @@ ${liveCtx}`
             ))}
           </div>
           <button onClick={() => setShowGuidance(g => !g)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg border transition-all ${showGuidance?'bg-orange-500/10 border-orange-500/30 text-orange-400':'bg-[#1E293B] border-[#334155] text-slate-400 hover:text-white'}`}>
-            <HelpCircle className="w-3.5 h-3.5" /> Guide
+            className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 text-xs rounded-lg border transition-all ${showGuidance?'bg-orange-500/10 border-orange-500/30 text-orange-400':'bg-[#1E293B] border-[#334155] text-slate-400 hover:text-white'}`}>
+            <HelpCircle className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Guide</span>
           </button>
           <button onClick={refreshContext} className="p-1.5 text-slate-400 hover:text-white hover:bg-[#1E293B] rounded-lg transition-colors">
-            <RefreshCw className={`w-4 h-4 ${ctxLoading?'animate-spin':''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${ctxLoading?'animate-spin':''}`} />
           </button>
           <button onClick={clearChat} className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
-            <Trash2 className="w-4 h-4" />
+            <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
         </div>
       </div>
 
       {/* BODY */}
-      <div className="flex flex-1 min-h-0 overflow-hidden">
+      <div className="flex flex-col sm:flex-row flex-1 min-h-0 overflow-hidden">
 
         {/* Guidance panel (slide in) */}
         {showGuidance && (
-          <div className="w-72 flex-shrink-0 bg-[#0F1419] border-r border-[#334155] overflow-y-auto p-3">
+          <div className="w-full sm:w-72 flex-shrink-0 bg-[#0F1419] border-b sm:border-b-0 sm:border-r border-[#334155] overflow-y-auto p-3 max-h-60 sm:max-h-none">
             <GuidancePanel onSend={(p) => { send(p); setShowGuidance(false); }} />
           </div>
         )}
@@ -610,7 +609,7 @@ ${liveCtx}`
                     Diagnose failures · Predict breakdowns · Log maintenance · Upload manuals · Analyze images
                   </p>
                 </div>
-                <div className="grid grid-cols-3 gap-2 w-full max-w-2xl">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full max-w-2xl">
                   {[
                     { icon:Cpu,           color:'text-blue-400',   bg:'bg-blue-500/10 border-blue-500/20',    q:'Add a new equipment to the system',            label:'Register Equipment' },
                     { icon:Activity,      color:'text-green-400',  bg:'bg-green-500/10 border-green-500/20',  q:'Enter sensor readings for a machine',           label:'Enter Sensor Data'  },
@@ -643,7 +642,7 @@ ${liveCtx}`
                       <Icon className={`w-3.5 h-3.5 ${meta?meta.color:'text-orange-400'}`} />
                     </div>
                   )}
-                  <div className={`max-w-[82%] flex flex-col gap-1.5 ${msg.role==='user'?'items-end':'items-start'}`}>
+                  <div className={`max-w-[90%] sm:max-w-[82%] flex flex-col gap-1.5 ${msg.role==='user'?'items-end':'items-start'}`}>
                     {msg.imageUrl && (
                       <img src={msg.imageUrl} alt="uploaded"
                         className="max-w-[220px] max-h-[160px] rounded-xl border border-indigo-500/30 object-cover" />
@@ -719,16 +718,16 @@ ${liveCtx}`
           </div>
 
           {/* INPUT BAR */}
-          <div className="flex-shrink-0 px-4 pb-2 pt-2 border-t border-[#334155] bg-[#0F1419]">
+          <div className="flex-shrink-0 px-3 sm:px-4 pb-3 pt-2 border-t border-[#334155] bg-[#0F1419]">
             {uploadMsg && !loading && (
               <div className="text-[10px] text-yellow-400 mb-1.5 px-1">{uploadMsg}</div>
             )}
 
             {/* Mobile quick actions */}
-            <div className="flex lg:hidden gap-1 mb-2 flex-wrap">
+            <div className="flex lg:hidden gap-1 mb-2 overflow-x-auto pb-1 -mx-1 px-1">
               {QUICK_ACTIONS.map(({ icon:Icon, label, prompt, color }) => (
                 <button key={label} onClick={() => send(prompt)}
-                  className="flex items-center gap-1 px-2 py-1 bg-[#1E293B] border border-[#334155] text-slate-400 text-[10px] rounded-lg">
+                  className="flex items-center gap-1 px-2 py-1.5 bg-[#1E293B] border border-[#334155] text-slate-400 text-[10px] rounded-lg flex-shrink-0 active:bg-[#334155]">
                   <Icon className={`w-3 h-3 ${color}`} /> {label}
                 </button>
               ))}
@@ -759,13 +758,9 @@ ${liveCtx}`
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => { if(e.key==='Enter' && !e.shiftKey) { e.preventDefault(); send(); } }}
-                placeholder={
-                  activeIntent && activeIntent !== 'QUERY'
-                    ? `Collecting ${INTENT_META[activeIntent]?.label||'data'}... type your answer`
-                    : 'Ask anything, say "add equipment", "log maintenance", or upload an image/document...'
-                }
+                placeholder="Ask anything or say 'add equipment', 'log maintenance'..."
                 rows={2}
-                className="flex-1 bg-[#1E293B] border border-[#334155] text-white text-sm px-4 py-2.5 rounded-xl resize-none focus:outline-none focus:border-orange-500 transition-colors placeholder:text-slate-600"
+                className="flex-1 bg-[#1E293B] border border-[#334155] text-white text-sm px-3 sm:px-4 py-2.5 rounded-xl resize-none focus:outline-none focus:border-orange-500 transition-colors placeholder:text-slate-600 min-w-0"
               />
 
               <button onClick={() => send()} disabled={loading || !input.trim()}

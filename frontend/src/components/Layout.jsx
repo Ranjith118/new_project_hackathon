@@ -213,8 +213,8 @@ export default function Layout() {
         </header>
 
         {/* ── PAGE CONTENT ── */}
-        <main className={`flex-1 min-w-0 ${isAssistant ? 'overflow-hidden flex flex-col' : 'overflow-auto'}`}>
-          <div className={isAssistant ? 'flex-1 overflow-hidden' : 'p-4 lg:p-6'}>
+        <main className={`flex-1 min-w-0 overflow-hidden ${isAssistant ? 'flex flex-col' : 'overflow-auto'}`}>
+          <div className={isAssistant ? 'flex-1 overflow-hidden flex flex-col h-full' : 'p-4 lg:p-6'}>
             <Outlet />
           </div>
         </main>
