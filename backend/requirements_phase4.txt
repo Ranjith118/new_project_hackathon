@@ -1,0 +1,14 @@
+# Phase 4: Failure Prediction and Remaining Useful Life (RUL) Prediction
+
+# Machine Learning
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Model serialization
+joblib>=1.3.0
+
+# Optional: Deep learning for Phase 5+
+# torch>=2.0.0
+# keras>=2.13.0

@@ -1,0 +1,299 @@
+BLAST FURNACE FAN - MAINTENANCE MANUAL
+Siemens Industrial Fan Type: SIF-BF 2800
+Rated Power: 500 kW | Speed: 980 RPM | Voltage: 6.6 kV
+Application: Blast Furnace Hot Blast System - Steel Manufacturing Plant
+
+=======================================================
+SECTION 1: NORMAL OPERATING PARAMETERS
+=======================================================
+- Temperature (bearing housing): Max 85°C, Normal 40-65°C
+- Temperature (motor winding): Max 130°C, Normal 70-90°C
+- Vibration (fan side bearing): Max 3.5 mm/s, Normal 0.5-1.8 mm/s
+- Vibration (motor side bearing): Max 3.0 mm/s, Normal 0.5-1.5 mm/s
+- Current: Max 55A, Normal 38-45A
+- Pressure (discharge): Normal 180-220 mbar
+- Flow rate: Normal 85,000 - 95,000 Nm3/h
+- RPM: 940-1020 RPM normal operating range
+- Inlet temperature: Max 250°C (hot blast), Normal 180-220°C
+- Outlet pressure: 200-250 mbar
+
+CRITICAL ALARM THRESHOLDS:
+- Bearing temperature > 90°C: STOP immediately
+- Vibration > 4.5 mm/s: STOP immediately
+- Current > 58A: REDUCE load
+- Flow rate drop > 20%: CHECK for blockage
+
+=======================================================
+SECTION 2: BEARING MAINTENANCE
+=======================================================
+Bearing Type (Fan Side): Spherical Roller Bearing 22328 CC/W33
+Bearing Type (Motor Side): Deep Groove Ball Bearing 6320
+Lubrication: Mobil SHC Polyrex EP2 high-temperature grease
+Regreasing interval: Every 1500 operating hours
+Bearing replacement interval: Every 25,000 hours or on condition
+
+BEARING REPLACEMENT PROCEDURE - FAN SIDE:
+Step 1: Stop fan - Apply Lockout/Tagout (LOTO) on main 6.6kV isolator
+Step 2: Verify dead with high-voltage tester - MANDATORY
+Step 3: Allow bearing to cool to below 50°C (minimum 2 hours after shutdown)
+Step 4: Release fan duct pressure - open manual bleed valve
+Step 5: Disconnect flexible coupling between fan and motor
+Step 6: Remove fan shaft bearing cover using 30mm socket
+Step 7: Use hydraulic puller SKF TMFN 130 to extract bearing from shaft
+Step 8: Clean shaft journal with emery cloth grade 240
+Step 9: Check shaft diameter - must be 140mm +0.0/-0.03mm tolerance
+Step 10: Heat new bearing to 100°C using induction heater - DO NOT exceed 120°C
+Step 11: Quickly press heated bearing onto shaft using bearing mounting tool
+Step 12: Apply 45g of Mobil SHC Polyrex EP2 grease (50% fill of housing cavity)
+Step 13: Reinstall bearing cover - torque bolts to 120 Nm in star pattern
+Step 14: Reconnect flexible coupling - check alignment with laser tool
+Step 15: Run fan unloaded for 30 minutes - monitor bearing temperature every 5 minutes
+Step 16: Gradually increase to full load over 2 hours
+
+SPARE PARTS FOR BEARING REPLACEMENT:
+- Bearing 22328 CC/W33 (Part No: BFF-001) x1 - fan side
+- Bearing 6320 (Part No: BFM-002) x1 - motor side
+- Grease Mobil SHC Polyrex EP2 - 1kg (Part No: GR-BF-001)
+- Bearing cover gasket (Part No: BCG-BF-001) x2
+- Flexible coupling insert (Part No: FC-BF-004) x1 - inspect, replace if worn
+- O-ring set (Part No: OR-BF-001) x1 set
+
+=======================================================
+SECTION 3: IMPELLER AND ROTOR MAINTENANCE
+=======================================================
+Impeller Type: Backward curved, 12 blades
+Impeller Diameter: 2800 mm
+Material: Heat-resistant steel EN 1.4841
+
+IMPELLER INSPECTION INTERVALS:
+- Visual inspection: Every 3 months
+- Dimensional check: Every 6 months
+- Dynamic balancing: Every 12 months or after blade repair
+
+IMPELLER INSPECTION PROCEDURE:
+Step 1: Lockout/Tagout - all energy sources
+Step 2: Open fan inspection door
+Step 3: Inspect each blade for:
+   - Erosion wear (acceptable limit: max 5mm depth)
+   - Cracks (ZERO tolerance - replace blade immediately)
+   - Build-up deposits (clean if > 3mm thick)
+   - Blade tip clearance: must be 8-12mm
+Step 4: Check hub welds for cracks using dye penetrant testing
+Step 5: Measure blade thickness - replace if below 8mm
+
+BLADE EROSION CAUSES:
+- Dust particles in blast air - check inlet filters
+- High velocity impact from debris
+- Chemical corrosion from sulfur compounds
+- Thermal fatigue from temperature cycling
+
+=======================================================
+SECTION 4: COOLING SYSTEM MAINTENANCE
+=======================================================
+The BFF fan uses water cooling for the motor and air cooling for the fan shaft bearings.
+
+WATER COOLING SYSTEM (MOTOR):
+- Coolant: Distilled water + 30% glycol
+- Flow rate: Min 15 L/min, Normal 20-25 L/min
+- Inlet temperature: Max 35°C, Normal 20-28°C
+- Outlet temperature: Max 55°C, Normal 40-50°C
+- Pressure: 2.5-3.5 bar
+
+COOLING SYSTEM CHECKS:
+Step 1: Check coolant flow rate - use ultrasonic flow meter
+Step 2: Check coolant quality - pH must be 7.5-9.0
+Step 3: Inspect heat exchanger fins - clean if fouled
+Step 4: Check pump impeller for wear
+Step 5: Inspect all hoses for cracks or hardening
+
+OVERHEATING CAUSES:
+1. Coolant flow reduced - check pump and valves
+2. Heat exchanger fouled - clean with descaling agent
+3. Air in coolant circuit - bleed and refill
+4. Coolant contamination - drain, flush, refill
+
+=======================================================
+SECTION 5: VIBRATION DIAGNOSIS AND BALANCING
+=======================================================
+VIBRATION LIMITS:
+- 0.0 - 1.8 mm/s: Normal - no action
+- 1.9 - 2.5 mm/s: Monitor - check monthly
+- 2.6 - 3.5 mm/s: WARNING - inspect within 7 days
+- 3.6 - 4.5 mm/s: ALERT - inspect within 24 hours
+- > 4.5 mm/s: STOP - shut down immediately
+
+VIBRATION DIAGNOSIS:
+1x RPM (16.3 Hz) dominant vibration: IMBALANCE
+   -> Check for blade deposits or erosion
+   -> Dynamic balance the impeller
+   -> Check for loose blade bolts
+
+2x RPM vibration: MISALIGNMENT
+   -> Check flexible coupling condition
+   -> Realign fan-motor coupling with laser tool
+   -> Check foundation bolts (torque: 350 Nm)
+
+High frequency (>100 Hz) vibration: BEARING DAMAGE
+   -> Measure bearing temperature
+   -> Check lubrication quality
+   -> Replace bearing if vibration increasing
+
+Broadband high frequency: FLOW TURBULENCE
+   -> Check inlet duct for obstructions
+   -> Verify damper position
+   -> Check blade tip clearance
+
+ON-SITE DYNAMIC BALANCING PROCEDURE:
+Step 1: Run fan at rated speed, measure vibration baseline
+Step 2: Attach trial weight (500g) at 0° position on impeller
+Step 3: Run again, record vibration amplitude and phase
+Step 4: Calculate correction weight and position using balance calculator
+Step 5: Attach correction weight - weld or bolt to impeller hub
+Step 6: Verify vibration reduced below 1.8 mm/s
+
+=======================================================
+SECTION 6: ELECTRICAL MAINTENANCE
+=======================================================
+Motor Type: Siemens 1LE1 Series
+Voltage: 6.6 kV (HIGH VOLTAGE - only licensed HV electricians)
+Insulation class: H (180°C)
+
+ELECTRICAL CHECKS (6-MONTHLY):
+- Insulation resistance: Min 100 MΩ at 5kV test voltage
+- Winding resistance: Compare to factory values ±5%
+- Stator temperature sensors: Verify calibration
+- Bearing temperature sensors: Verify calibration ±2°C
+- Speed sensor: Verify output signal
+
+SOFT STARTER MAINTENANCE:
+- Clean cooling fans every 3 months
+- Check thyristor connections annually
+- Verify ramp-up time setting: 45 seconds
+- Verify ramp-down time setting: 60 seconds
+
+MOTOR PROTECTION SETTINGS:
+- Overload relay: 52A (115% of FLC)
+- Locked rotor protection: 2.5 seconds
+- Under-voltage protection: 5.5 kV
+- Differential protection: 15% differential current
+- Bearing temperature trip: 90°C
+- Winding temperature trip: 130°C
+
+=======================================================
+SECTION 7: PREVENTIVE MAINTENANCE SCHEDULE
+=======================================================
+Daily:
+- Check bearing temperatures (should be <80°C)
+- Check vibration level on HMI
+- Check current reading (should be 38-45A)
+- Listen for unusual noise at inspection hatch
+- Verify flow rate on process display (85,000-95,000 Nm3/h)
+
+Weekly:
+- Check grease nipple condition
+- Inspect flexible coupling visually
+- Check inlet filter differential pressure
+- Verify cooling water flow and temperature
+- Log all parameters in maintenance register
+
+Monthly:
+- Measure vibration with portable analyzer
+- Check coupling alignment (acceptable: <0.1mm offset)
+- Inspect inlet ductwork for leaks
+- Check impeller through inspection door
+- Test emergency stop function
+- Check all bolts for tightness
+
+Every 3 months:
+- Full impeller visual inspection
+- Clean inlet filter elements
+- Check heat exchanger condition
+- Inspect flexible coupling insert
+- Check motor cable connections
+- Lubrication check and top-up
+
+Every 6 months:
+- Full electrical testing
+- Dynamic balance check
+- Coolant quality test and change if required
+- Vibration spectrum analysis
+- Bearing condition assessment (ultrasound)
+
+Annual:
+- Full overhaul - bearings, seals, coupling
+- Impeller non-destructive testing
+- Motor winding inspection
+- Foundation inspection
+- Performance test - flow rate vs pressure curve
+
+=======================================================
+SECTION 8: FAULT DIAGNOSIS TABLE
+=======================================================
+FAULT: High bearing temperature (>85°C)
+CAUSE 1: Insufficient grease -> Action: Apply 45g Mobil SHC Polyrex EP2
+CAUSE 2: Wrong grease type -> Action: Flush and repack with correct grease
+CAUSE 3: Bearing overloaded -> Action: Check alignment and balance
+CAUSE 4: Bearing damaged -> Action: Replace bearing BFF-001
+
+FAULT: High vibration (>3.5 mm/s)
+CAUSE 1: Imbalance -> Action: Clean blades, dynamic balance
+CAUSE 2: Misalignment -> Action: Realign coupling, check foundation
+CAUSE 3: Bearing failure -> Action: Ultrasound check, replace if necessary
+CAUSE 4: Resonance -> Action: Check operating speed vs critical speed
+
+FAULT: Low flow rate
+CAUSE 1: Inlet filter blocked -> Action: Clean or replace filter elements
+CAUSE 2: Damper not fully open -> Action: Check damper actuator and position
+CAUSE 3: Blade erosion -> Action: Inspect blades, repair or replace
+CAUSE 4: Duct leakage -> Action: Inspect and seal duct joints
+
+FAULT: High motor current (>55A)
+CAUSE 1: System resistance too high -> Action: Check damper and duct
+CAUSE 2: Fan overloaded -> Action: Reduce blast volume via damper
+CAUSE 3: Bearing friction -> Action: Check lubrication, inspect bearings
+CAUSE 4: Electrical fault -> Action: Check motor windings and connections
+
+=======================================================
+SECTION 9: SAFETY REQUIREMENTS
+=======================================================
+MANDATORY BEFORE ANY MAINTENANCE:
+1. Notify blast furnace control room - production impact
+2. Confirm furnace in safe holding state
+3. Switch off 6.6kV main isolator - HV AUTHORIZED PERSON ONLY
+4. Apply personal lockout - EVERY person working must lock individually
+5. Apply DANGER tag on isolator
+6. Test with HV tester (6.6kV) - verify dead
+7. Wait 10 minutes for residual charge to dissipate
+8. Apply earthing clamps to all three phases
+9. Bleed inlet duct pressure to zero
+10. Allow hot parts to cool to safe temperature before touching
+
+SPECIFIC HAZARDS FOR BLAST FURNACE FAN:
+- HIGH VOLTAGE 6.6kV: Fatal if contacted - HV license required
+- HOT SURFACES: Inlet duct reaches 250°C - burns risk
+- NOISE LEVEL: >105 dB during operation - mandatory ear protection
+- CONFINED SPACE: Fan housing is classified confined space
+- DUST: Blast furnace dust contains iron oxide - respiratory protection
+- CO GAS: Possible CO leakage from blast furnace - CO detector mandatory
+
+PPE REQUIRED:
+- Safety glasses (EN166)
+- HV insulated gloves (Class 4 - 36kV rated)
+- Safety boots steel toe (EN20345)
+- Hard hat (EN397)
+- Ear protection (EN352) - Class 4 minimum
+- Dust mask (FFP3) when inside fan housing
+- CO gas detector when working near ductwork
+
+CONFINED SPACE ENTRY:
+- Permit to work required
+- Continuous gas monitoring
+- Minimum 2 persons - one standby outside
+- Emergency rescue plan in place
+- Communication maintained throughout
+
+EMERGENCY CONTACTS:
+- Control Room: Extension 101
+- Maintenance Emergency: Extension 102
+- Medical: Extension 999
+- Fire: Extension 101

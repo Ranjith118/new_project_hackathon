@@ -1,0 +1,6 @@
+equipment_name,failure_type,root_cause,downtime_hours,report_date
+Furnace Unit A,Overheating,Sensor calibration drift caused false readings,8,2024-01-10
+Conveyor Belt C,Drive failure,Motor winding short due to moisture ingress,12,2024-01-08
+Hydraulic Press D,Pressure control failure,Relief valve spring fatigue,4,2024-01-05
+Roller Mill B,Bearing seizure,Insufficient lubrication during operation,6,2024-01-03
+CNC Machine E,Spindle motor failure,Power surge during thunderstorm,24,2024-01-01

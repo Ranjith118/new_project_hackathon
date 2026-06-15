@@ -1,0 +1,11 @@
+part_name,stock_quantity,lead_time_days,supplier
+Bearing Assembly 6205,50,7,SteelCo Supplies
+Bearing Assembly 6206,35,7,SteelCo Supplies
+Temperature Sensor PT100,25,14,Industrial Sensors Ltd
+Pressure Transmitter,15,21,Process Controls Inc
+Hydraulic Seal Kit,40,5,SealPro Distributors
+Drive Belt 50mm,100,3,Conveyor Components Ltd
+Motor Brush Set,20,10,Electric Motors Corp
+Filter Element HF-200,60,7,Filtration Solutions
+Lubricant Grease 500g,200,3,Industrial Lubricants Co
+Safety Relay Module,8,28,Automation Parts Ltd

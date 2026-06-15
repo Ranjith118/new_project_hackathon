@@ -1,0 +1,6 @@
+equipment_name,issue,action_taken,downtime_hours,severity,technician,maintenance_date
+Furnace Unit A,Temperature sensor malfunction,Replaced sensor and recalibrated system,4,high,John Smith,2024-01-15
+Roller Mill B,Bearing wear detected,Scheduled bearing replacement during next maintenance window,0,medium,Jane Doe,2024-01-14
+Conveyor Belt C,Excessive slippage reported,Adjusted tension and lubricated belt,2,low,Mike Johnson,2024-01-13
+Hydraulic Press D,Pressure drop observed,Replaced hydraulic seals and bled system,6,high,Rick Williams,2024-01-12
+CNC Machine E,Spindle vibration increased,Balanced spindle and replaced bearings,3,medium,Sarah Brown,2024-01-11

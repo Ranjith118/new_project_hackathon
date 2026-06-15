@@ -1,0 +1,140 @@
+ROLLING MILL MOTOR - MAINTENANCE MANUAL
+ABB Motor Type: M3BP 315 SMB 4
+Rated Power: 250 kW | Speed: 1485 RPM | Voltage: 415V
+
+=======================================================
+SECTION 1: NORMAL OPERATING PARAMETERS
+=======================================================
+- Temperature (winding): Max 120°C, Normal 60-80°C
+- Vibration: Max 2.8 mm/s, Normal 0.5-1.5 mm/s
+- Current: Max 32A, Normal 18-22A
+- Pressure (cooling air): 68-75 bar
+- RPM: 1400-1600 RPM normal range
+
+=======================================================
+SECTION 2: BEARING MAINTENANCE
+=======================================================
+Bearing Type: Deep Groove Ball Bearing 6205-2Z
+Lubrication: Shell Alvania EP2 grease
+Regreasing interval: Every 2000 operating hours
+Bearing replacement interval: Every 20,000 hours or on failure
+
+BEARING REPLACEMENT PROCEDURE:
+Step 1: Isolate power - Apply Lockout/Tagout (LOTO)
+Step 2: Allow motor to cool to below 40°C before touching
+Step 3: Remove motor end covers using 24mm socket
+Step 4: Use bearing puller SKF TMMP 5 to extract old bearing
+Step 5: Clean shaft and housing with solvent
+Step 6: Inspect shaft for scoring - replace if diameter reduced >0.1mm
+Step 7: Heat new bearing to 80°C using bearing heater
+Step 8: Press new bearing onto shaft - ensure it seats fully
+Step 9: Apply 15g of Shell Alvania EP2 grease to new bearing
+Step 10: Reinstall end covers - torque bolts to 45 Nm
+Step 11: Rotate shaft by hand - should turn freely
+Step 12: Run motor unloaded for 30 minutes and monitor temperature
+
+SPARE PARTS FOR BEARING REPLACEMENT:
+- Bearing 6205-2Z (Part No: B6205) x2 - drive end and non-drive end
+- Bearing seal (Part No: BS-001) x2
+- Grease Shell Alvania EP2 - 500g
+- End cover gasket (Part No: ECG-001) x2
+
+=======================================================
+SECTION 3: COOLING SYSTEM MAINTENANCE
+=======================================================
+- Clean external cooling fins every 500 hours
+- Check cooling fan blade for cracks every 1000 hours
+- Replace cooling fan (Part No: CFB-150) if cracked or imbalanced
+- Ensure ventilation gap of minimum 200mm around motor
+
+OVERHEATING CAUSES AND REMEDIES:
+1. Blocked cooling fins -> Clean with compressed air
+2. Cooling fan damaged -> Replace Part No CFB-150
+3. Excessive ambient temperature -> Improve room ventilation
+4. Overloaded motor -> Reduce load or upgrade motor
+5. Blocked ventilation inlet -> Clear obstruction
+
+=======================================================
+SECTION 4: VIBRATION DIAGNOSIS
+=======================================================
+Vibration > 2.8 mm/s: WARNING - Inspect immediately
+Vibration > 4.0 mm/s: CRITICAL - Shut down immediately
+
+VIBRATION CAUSES:
+- Bearing wear: High broadband vibration, elevated temperature
+- Shaft misalignment: 2x frequency peak, axial vibration
+- Imbalance: 1x frequency dominant
+- Loose mounting: Multiple harmonics
+- Gear wear: High frequency spikes
+
+VIBRATION TROUBLESHOOTING:
+1. Measure at bearing housing - both ends
+2. Compare drive end vs non-drive end
+3. High at drive end only -> coupling or alignment
+4. High at both ends -> bearing wear or imbalance
+5. Use laser alignment tool if misalignment suspected
+
+=======================================================
+SECTION 5: ELECTRICAL MAINTENANCE
+=======================================================
+- Insulation resistance check: Every 6 months, min 1 MΩ
+- Winding resistance check: Every 12 months
+- Thermal protection check: Every 6 months
+- Replace thermal protector (Part No: TP-25) if tripping falsely
+
+ELECTRICAL FAULT SYMPTOMS:
+- High current + normal vibration = Electrical issue
+- Single phase operation = Check contactor (Part No: CT-25A)
+- Frequent overload trips = Check load or thermal setting
+
+=======================================================
+SECTION 6: PREVENTIVE MAINTENANCE SCHEDULE
+=======================================================
+Daily:
+- Check motor temperature (should be <100°C)
+- Listen for unusual noise
+- Check vibration level visually
+
+Weekly:
+- Check lubrication (bearing temperature <70°C)
+- Inspect cooling fan operation
+- Check motor mounting bolts
+
+Monthly:
+- Measure vibration with analyzer
+- Check insulation resistance
+- Inspect electrical connections
+
+Every 6 months:
+- Full bearing inspection
+- Lubrication replacement
+- Alignment check
+- Thermal imaging
+
+Annual:
+- Full overhaul
+- Bearing replacement if >10,000 hours
+- Winding inspection
+
+=======================================================
+SECTION 7: SAFETY REQUIREMENTS
+=======================================================
+MANDATORY BEFORE ANY MAINTENANCE:
+1. Switch off main isolator
+2. Apply personal lockout device
+3. Apply red DANGER tag
+4. Test with voltmeter - verify dead
+5. Allow 5 minutes for residual charge to dissipate
+
+PPE REQUIRED:
+- Safety glasses (EN166)
+- Insulated gloves (Class 0 minimum)
+- Safety boots (EN20345)
+- Hard hat when working under equipment
+- Ear protection if noise >85dB
+
+NEVER:
+- Work on live equipment
+- Bypass thermal protection
+- Operate with cooling fan removed
+- Exceed rated load by more than 10%

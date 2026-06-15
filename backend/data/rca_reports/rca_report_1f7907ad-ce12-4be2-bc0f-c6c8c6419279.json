@@ -1,0 +1,83 @@
+{
+  "report_id": "1f7907ad-ce12-4be2-bc0f-c6c8c6419279",
+  "equipment": "Rolling Mill Motor",
+  "issue": "Critical bearing vibration and overheating",
+  "root_cause": "Bearing Failure",
+  "confidence": 87.33833939393939,
+  "alternative_causes": [
+    {
+      "cause": "Bearing Wear",
+      "confidence": 68.79333333333332,
+      "reasoning": "Pattern match: Bearing Wear Pattern"
+    },
+    {
+      "cause": "Lubrication Failure",
+      "confidence": 64.77714285714286,
+      "reasoning": "Pattern match: Lubrication Failure Pattern"
+    },
+    {
+      "cause": "Cooling System Failure",
+      "confidence": 50,
+      "reasoning": "Elevated temperature detected"
+    }
+  ],
+  "evidence": [
+    "Pattern match: Bearing Failure Pattern (score: 0.74)",
+    "Historical case FR-2000: Motor bearing failure - complete replacement requi... (similarity: 0.88)",
+    "Elevated vibration: 4.3 mm/s",
+    "Elevated temperature: 110.0\u00b0C",
+    "Elevated current: 31.0A"
+  ],
+  "recommended_actions": [
+    "Immediate inspection",
+    "Replace bearing",
+    "Check shaft alignment"
+  ],
+  "investigation_steps": [
+    "1. Check bearing temperature and compare to baseline",
+    "2. Measure vibration amplitude at bearing housing",
+    "3. Inspect bearing for visible wear or damage",
+    "4. Check lubricant condition and level",
+    "5. Verify shaft alignment",
+    "6. Check for unusual noise or heat"
+  ],
+  "similar_cases": [
+    {
+      "case_id": "CASE-VIB-001",
+      "type": "failure_report",
+      "issue": "High vibration reading: 4.3 mm/s",
+      "root_cause": "Bearing Wear",
+      "similarity": 0.92
+    },
+    {
+      "case_id": "CASE-TEMP-001",
+      "type": "maintenance_log",
+      "issue": "Temperature exceeded threshold: 110.0\u00b0C",
+      "root_cause": "Cooling System Failure",
+      "similarity": 0.89
+    },
+    {
+      "case_id": "FR-2000",
+      "type": "failure_report",
+      "issue": "Motor bearing failure - complete replacement required",
+      "root_cause": "Bearing Failure",
+      "similarity": 0.88
+    },
+    {
+      "case_id": "ML-1000",
+      "type": "maintenance_log",
+      "issue": "Excessive vibration detected during operation",
+      "root_cause": "Bearing Wear",
+      "similarity": 0.85
+    },
+    {
+      "case_id": "CASE-CURR-001",
+      "type": "failure_report",
+      "issue": "High current draw: 31.0A",
+      "root_cause": "Motor Overload",
+      "similarity": 0.85
+    }
+  ],
+  "created_at": "2026-06-11T14:11:52.621096",
+  "report_format": "json"
+}
