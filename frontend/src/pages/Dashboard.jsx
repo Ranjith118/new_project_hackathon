@@ -11,6 +11,7 @@ import { dashboardAPI, equipmentAPI } from '../services/api';
 
 import { API_BASE as API } from '../config';
 const get = (url) => fetch(API + url).then(r => r.json()).catch(() => null);
+const post = (url, body) => fetch(API + url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined }).then(r => r.json()).catch(() => null);
 
 const healthColor = (s) =>
   s >= 80 ? '#10B981' : s >= 60 ? '#FBBF24' : s >= 40 ? '#F97316' : '#EF4444';
@@ -90,15 +91,41 @@ export default function Dashboard() {
   }, []);
 
   const load = useCallback(async () => {
-    const [stats, health, alertSum, alerts, inventory, spares, sensorData] = await Promise.all([
+    // First simulate fresh sensor readings so health scores are current
+    await post('/api/sensor-data/simulate-all', {});
+
+    const [stats, liveStatus, alertSum, alerts, inventory, spares, sensorData] = await Promise.all([
       get('/api/dashboard/stats'),
-      get('/api/anomaly/health-status'),
+      get('/api/sensor-data/live-status'),   // ← same source as EquipmentHealth page
       get('/api/alerts/summary'),
       get('/api/alerts'),
       get('/api/procurement/inventory-summary'),
       get('/api/procurement/spares'),
       get('/api/sensor-data/?limit=100'),
     ]);
+
+    // Normalise live-status into the shape the rest of the Dashboard expects
+    const equipmentFromLive = (liveStatus?.equipment ?? []).map(eq => ({
+      equipment_name: eq.equipment_name,
+      health_score:   eq.health_score,
+      health_status:  eq.health_status,
+      risk_level:     eq.risk_level,
+      trend:          eq.trend ?? 'stable',
+      anomaly_count:  0,
+    }));
+    const totalEq   = equipmentFromLive.length;
+    const healthyEq = equipmentFromLive.filter(e => e.health_score >= 85).length;
+    const overallPct = totalEq > 0
+      ? Math.round(equipmentFromLive.reduce((s, e) => s + e.health_score, 0) / totalEq)
+      : 0;
+
+    const health = {
+      overall_health_percentage: overallPct,
+      total_equipment:           totalEq,
+      healthy_count:             healthyEq,
+      equipment:                 equipmentFromLive,
+    };
+
     setData({ stats, health, alertSum, alerts, inventory, spares, sensorData });
     setLastRefresh(new Date());
     setLoading(false);
