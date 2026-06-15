@@ -3,11 +3,11 @@ fastapi==0.111.0
 uvicorn[standard]==0.29.0
 python-multipart==0.0.9
 
-# Database — latest version supports Python 3.14
-sqlalchemy>=2.0.36
+# Database
+sqlalchemy[asyncio]==2.0.36
 aiosqlite==0.20.0
 
-# Pydantic — latest has py3.14 wheels
+# Pydantic
 pydantic>=2.10.0
 pydantic-settings>=2.6.0
 
@@ -24,18 +24,14 @@ httpx==0.27.0
 groq==0.9.0
 openai==1.30.1
 
-# ML — only binary install (no compilation needed)
-# Use --only-binary=:all: in build command for these
+# ML — lightweight, no PyTorch
 numpy>=2.1.0
 scikit-learn>=1.5.0
 xgboost>=2.1.0
 scipy>=1.14.0
 
-# Vector DB — latest
+# Vector DB — without heavy ML deps
 chromadb>=0.6.0
-
-# Embeddings — latest
-sentence-transformers>=3.3.0
 
 # Document processing
 PyPDF2==3.0.1
