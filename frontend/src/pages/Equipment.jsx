@@ -9,7 +9,7 @@ import {
   AreaChart, Area, Tooltip, ResponsiveContainer
 } from 'recharts';
 
-const API = 'http://localhost:8000';
+import { API_BASE as API } from '../config';
 const get  = (url) => fetch(API + url).then(r => r.json()).catch(() => null);
 const post = (url, body) => fetch(API + url, {
   method: 'POST', headers: { 'Content-Type': 'application/json' },

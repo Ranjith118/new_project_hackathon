@@ -7,7 +7,7 @@ import {
   CheckCircle, Factory, Cpu, BookOpen, ArrowRight
 } from 'lucide-react';
 
-const API = 'http://localhost:8000';
+import { API_BASE as API } from '../config';
 const get = (url) => fetch(API + url).then(r => r.json()).catch(() => null);
 
 const MODULES = [

@@ -11,7 +11,7 @@ import {
   ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend
 } from 'recharts';
 
-const API = 'http://localhost:8000';
+import { API_BASE as API } from '../config';
 const get = url => fetch(url).then(r => r.json()).catch(() => null);
 
 const COLORS = ['#10B981','#F97316','#EF4444','#3B82F6','#8B5CF6','#FBBF24','#EC4899','#14B8A6'];

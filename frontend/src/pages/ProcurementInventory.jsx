@@ -10,7 +10,8 @@ import {
   XAxis, YAxis, Tooltip, ResponsiveContainer
 } from 'recharts';
 
-const API = 'http://localhost:8000/api/procurement';
+import { API_BASE } from '../config';
+const API = `${API_BASE}/api/procurement`;
 const get = (u) => fetch(API + u).then(r => r.json()).catch(() => null);
 
 /* ── helpers ─────────────────────────────────────────────── */

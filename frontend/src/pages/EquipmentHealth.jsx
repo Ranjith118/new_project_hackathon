@@ -6,7 +6,7 @@ import {
   ChevronDown, ChevronUp
 } from 'lucide-react';
 
-const API = 'http://localhost:8000';
+import { API_BASE as API } from '../config';
 
 /* ── fetch helpers ──────────────────────────────────────── */
 const get  = (url) => fetch(API + url).then(r => r.json()).catch(() => null);

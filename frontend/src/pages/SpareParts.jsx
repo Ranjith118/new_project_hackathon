@@ -11,7 +11,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 
-const API = 'http://localhost:8000';
+import { API_BASE as API } from '../config';
 
 function SpareParts() {
   const [parts, setParts] = useState([]);

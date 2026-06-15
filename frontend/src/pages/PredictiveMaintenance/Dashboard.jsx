@@ -13,7 +13,7 @@ import {
   getWarnings, trainFailureModel, trainRULModel
 } from '../../services/predictionApi';
 
-const API = 'http://localhost:8000';
+import { API_BASE as API } from '../../config';
 const get  = (url) => fetch(API + url).then(r => r.json()).catch(() => null);
 const post = (url) => fetch(API + url, { method:'POST' }).then(r => r.json()).catch(() => null);
 

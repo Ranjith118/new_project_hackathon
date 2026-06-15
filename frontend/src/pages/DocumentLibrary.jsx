@@ -127,7 +127,7 @@ const UploadModal = ({ isOpen, onClose, onUpload }) => {
       const formData = new FormData();
       formData.append('file', file);
       
-      const uploadResp = await fetch('http://localhost:8000/api/doc-intelligence/upload', {
+      const uploadResp = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/doc-intelligence/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -143,7 +143,7 @@ const UploadModal = ({ isOpen, onClose, onUpload }) => {
       setStatus({ type: 'info', message: 'Uploaded. AI is analysing document...' });
       
       // Step 2: Process (AI analysis + chunking + vector store indexing)
-      const processResp = await fetch(`http://localhost:8000/api/doc-intelligence/process/${docId}`, {
+      const processResp = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/doc-intelligence/process/${docId}`, {
         method: 'POST',
       });
       

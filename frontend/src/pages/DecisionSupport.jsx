@@ -11,9 +11,10 @@ import {
   Cell
 } from 'recharts';
 
-const API  = 'http://localhost:8000/api/decision-support';
-const PROC = 'http://localhost:8000/api/procurement';
-const SENSOR_API = 'http://localhost:8000/api/sensor-data';
+import { API_BASE } from '../config';
+const API  = `${API_BASE}/api/decision-support`;
+const PROC = `${API_BASE}/api/procurement`;
+const SENSOR_API = `${API_BASE}/api/sensor-data`;
 const get  = (u) => fetch(u).then(r => r.json()).catch(() => null);
 const post = (u, b) => fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }).then(r => r.json()).catch(() => null);
 const POLL_INTERVAL = 3000; // 3 seconds
@@ -63,8 +64,8 @@ function EquipmentDetail({ equip, criticality, liveStatus, onBack }) {
   useEffect(() => {
     Promise.all([
       get(PROC + '/spares'),
-      get(`http://localhost:8000/api/prediction/risk/${encodeURIComponent(equip.equipment_name)}`),
-      get(`http://localhost:8000/api/maintenance-logs/?equipment_name=${encodeURIComponent(equip.equipment_name)}&limit=4`),
+      get(`${API_BASE}/api/prediction/risk/${encodeURIComponent(equip.equipment_name)}`),
+      get(`${API_BASE}/api/maintenance-logs/?equipment_name=${encodeURIComponent(equip.equipment_name)}&limit=4`),
     ]).then(([sp, pr, ml]) => {
       setSpares(sp?.parts?.filter(p => p.equipment_type === 'motor' || p.status !== 'in_stock').slice(0, 5) || []);
       setPreds(pr);

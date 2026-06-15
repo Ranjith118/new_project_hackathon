@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = 'http://localhost:8000/api/doc-intelligence';
+const API = `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/doc-intelligence`;
 
 export const docIntelligenceApi = {
   // Upload file

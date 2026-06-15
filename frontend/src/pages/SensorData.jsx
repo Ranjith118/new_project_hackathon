@@ -9,7 +9,8 @@ import {
   CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 
-const API = 'http://localhost:8000/api/sensor-data';
+import { API_BASE } from '../config';
+const API = `${API_BASE}/api/sensor-data`;
 
 const statusColor = (s) => ({ normal:'#10B981', warning:'#FBBF24', critical:'#EF4444' })[s] || '#94A3B8';
 const statusBg    = (s) => ({

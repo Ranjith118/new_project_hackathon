@@ -11,8 +11,9 @@ import {
   Line, Legend
 } from 'recharts';
 
-const API = 'http://localhost:8000/api/operational';
-const EQ_API = 'http://localhost:8000/api/equipment';
+import { API_BASE } from '../config';
+const API = `${API_BASE}/api/operational`;
+const EQ_API = `${API_BASE}/api/equipment`;
 const get = (url) => fetch(url).then(r => r.json()).catch(() => null);
 
 const COLORS = ['#EF4444','#F97316','#FBBF24','#10B981','#3B82F6','#8B5CF6','#EC4899','#14B8A6'];

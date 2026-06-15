@@ -9,7 +9,8 @@ import {
   AreaChart, Area, Tooltip, ResponsiveContainer
 } from 'recharts';
 
-const API = 'http://localhost:8000/api/doc-intelligence';
+import { API_BASE } from '../config';
+const API = `${API_BASE}/api/doc-intelligence`;
 
 const SC = {
   completed:  'text-green-400 bg-green-400/10 border-green-400/30',

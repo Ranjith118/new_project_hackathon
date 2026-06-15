@@ -7,8 +7,9 @@ import {
   Camera, Lightbulb, Database, TrendingUp, Bell
 } from 'lucide-react';
 
-const API  = 'http://localhost:8000';
-const DAPI = 'http://localhost:8000/api/doc-intelligence';
+import { API_BASE } from '../config';
+const API  = API_BASE;
+const DAPI = `${API_BASE}/api/doc-intelligence`;
 const get  = (url) => fetch(url).then(r => r.json()).catch(() => null);
 
 // Strip markdown symbols from AI responses

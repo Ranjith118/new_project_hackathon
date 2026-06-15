@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
-const API = 'http://localhost:8000';
+import { API_BASE as API } from '../config';
 const get  = (u) => fetch(API + u).then(r => r.json()).catch(() => null);
 const post = (u, b) => fetch(API + u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }).then(r => r.json()).catch(() => null);
 

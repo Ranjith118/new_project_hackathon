@@ -57,10 +57,12 @@ app = FastAPI(
 )
 
 # Configure CORS
+# Note: allow_credentials=True is incompatible with allow_origins=["*"] in browsers.
+# We use allow_credentials=False so the wildcard origin works correctly in production.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

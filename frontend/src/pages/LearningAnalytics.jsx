@@ -9,7 +9,7 @@ import {
   XAxis, YAxis, Tooltip, ResponsiveContainer, Legend
 } from 'recharts';
 
-const API = 'http://localhost:8000';
+import { API_BASE as API } from '../config';
 const get = (u) => fetch(API + u).then(r => r.json()).catch(() => null);
 const CHART_COLORS = ['#EF4444','#F97316','#FBBF24','#10B981','#3B82F6','#8B5CF6'];
 
