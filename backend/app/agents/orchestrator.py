@@ -32,6 +32,7 @@ ALL_AGENTS = {
 
 # Intent → agents mapping
 INTENT_AGENTS = {
+    "informational":    ["sensor", "prediction"],
     "sensor_history":   ["sensor_history"],
     "diagnosis":        ["sensor", "prediction", "rca", "document", "recommendation"],
     "prediction":       ["sensor", "prediction", "recommendation"],
@@ -47,6 +48,13 @@ INTENT_AGENTS = {
 def detect_intent(query: str) -> str:
     """Detect query intent to decide which agents to run."""
     q = query.lower()
+
+    # Informational — user just wants to know about machine status/details
+    if any(w in q for w in ["tell me about", "what is", "describe", "explain", "show me", "give me info",
+                              "information about", "details about", "about the", "overview",
+                              "status of", "condition of", "how is the", "how is my"]):
+        return "informational"
+
     if any(w in q for w in ["7 day", "7day", "last week", "history", "trend", "past", "previous",
                               "sensor detail", "sensor data", "sensor history", "readings", "show sensor"]):
         return "sensor_history"
@@ -144,17 +152,53 @@ async def run_agents(agent_names: List[str], context: Dict) -> Dict[str, AgentRe
 
 
 def build_synthesis_prompt(query: str, agent_results: Dict[str, AgentResult], context: Dict) -> str:
-    """Build the LLM prompt to synthesize all agent outputs."""
+    """Build the LLM prompt to synthesize all agent outputs.
+    Response format changes based on intent — informational queries get a
+    status overview, problem/diagnosis queries get the full repair template.
+    """
     eq = context.get("equipment_name", "the equipment")
+    intent = context.get("intent", "general")
 
-    sections = [f"USER QUERY: {query}\nEQUIPMENT: {eq}\n"]
+    sections = [f"USER QUERY: {query}\nEQUIPMENT: {eq}\nINTENT: {intent}\n"]
 
     for name, result in agent_results.items():
         if result.success and result.data:
             sections.append(f"=== {name.upper().replace('_',' ')} AGENT ===")
             sections.append(json.dumps(result.data, indent=2, default=str))
 
-    sections.append("""
+    # ── Informational / status query → concise overview ──────────────
+    if intent == "informational":
+        sections.append("""
+The user is asking for general information about this equipment — NOT reporting a problem.
+Respond with a concise equipment status overview in this plain-text format:
+
+EQUIPMENT: [name]
+
+CURRENT STATUS:
+- Health Score: [X%] ([Healthy/Warning/Poor/Critical])
+- Risk Level: [Low/Medium/High/Critical]
+- Failure Probability: [X%]
+- Remaining Useful Life: [X days]
+
+LIVE SENSOR READINGS:
+- Temperature: [value] °C (Normal range: X–Y)
+- Vibration: [value] mm/s (Normal range: X–Y)
+- Current: [value] A (Normal range: X–Y)
+- Pressure: [value] bar (Normal range: X–Y)
+- RPM: [value] (Normal range: X–Y)
+
+MACHINE OVERVIEW:
+[2–3 sentences describing what this machine does in a steel plant and its key components such as motor windings, bearings, cooling fan, shaft, etc.]
+
+CURRENT CONDITION SUMMARY:
+[1–2 sentences summarizing whether the machine is healthy or has any concerns worth watching.]
+
+Do NOT include repair procedures, spare parts lists, or step-by-step guides unless there is an active problem.
+Only mention maintenance recommendations if a sensor is in WARNING or CRITICAL state.
+""")
+    # ── Problem / diagnosis / maintenance query → full repair template ──
+    else:
+        sections.append("""
 Based on ALL the above agent outputs, provide a comprehensive maintenance engineering response.
 
 RESPOND IN THIS EXACT STRUCTURE (plain text, no markdown ** or ## symbols):
@@ -249,6 +293,7 @@ async def orchestrate(
         "sensor_readings":  sensor_readings,
         "issue":            query,
         "live_context":     live_context,
+        "intent":           intent,
         # Pre-populate health hint from context so agents have a starting point
         "health_score":     None,
         "risk_level":       None,
@@ -306,14 +351,15 @@ async def orchestrate(
 
     system_prompt = (
         "You are a Senior Industrial Maintenance Engineer and Agentic AI for a steel manufacturing plant. "
-        "Your PRIMARY job is to detect anomalies from live sensor data and guide maintenance technicians. "
-        "When sensors are in CRITICAL or WARNING state, immediately diagnose the problem, identify root cause, "
-        "and provide step-by-step resolution guidance. "
-        "Synthesize the multi-agent analysis outputs into a clear, actionable maintenance response. "
+        "IMPORTANT: Match your response to what the user actually asked.\n"
+        "- If the user asks a GENERAL INFORMATION question (tell me about, what is, describe, how is, status), "
+        "respond with a concise equipment overview showing sensor readings and machine condition ONLY. "
+        "Do NOT include repair procedures or spare parts unless a sensor is in WARNING/CRITICAL state.\n"
+        "- If the user reports a PROBLEM or asks how to FIX something, provide full diagnosis, root cause, "
+        "repair steps, spare parts, and recommendations.\n"
         "Use plain text only — no ** bold, no ## headers, no markdown. "
-        "Use UPPERCASE for section names (DIAGNOSIS:, ROOT CAUSE:, IMMEDIATE ACTIONS:, REPAIR PROCEDURE:). "
-        "Use numbers and dashes for lists. Be specific with values, thresholds, part numbers, and procedures. "
-        "If critical sensors are detected, lead with CRITICAL ALERT and prioritize immediate safety actions."
+        "Use UPPERCASE for section names. Use numbers and dashes for lists. "
+        "Be specific with actual sensor values, thresholds, and part numbers."
     )
 
     messages = [{"role": "system", "content": system_prompt}]
