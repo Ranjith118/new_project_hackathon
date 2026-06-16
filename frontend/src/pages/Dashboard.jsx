@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Activity, AlertTriangle, Brain, Zap, Clock,
   Package, CheckCircle, AlertCircle,
@@ -80,6 +81,7 @@ function HealthGauge({ score }) {
    DASHBOARD
 ═══════════════════════════════════════════════════════════ */
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [data, setData]         = useState({});
   const [loading, setLoading]   = useState(true);
   const [lastRefresh, setLastRefresh] = useState(new Date());
@@ -266,7 +268,7 @@ export default function Dashboard() {
         <Card className="p-4">
           <SectionHead icon={AlertTriangle} title="Active Alerts"
             sub={`${activeAlerts.length} active`}
-            action={{ label: 'View All', fn: () => window.location.href = '/alerts' }} />
+            action={{ label: 'View All', fn: () => navigate('/alerts') }} />
           <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
             {activeAlerts.length === 0 ? (
               <div className="text-center py-8">
@@ -294,7 +296,7 @@ export default function Dashboard() {
         {/* Equipment Health */}
         <Card className="p-4">
           <SectionHead icon={Activity} title="Equipment Health Status"
-            action={{ label: 'Details', fn: () => window.location.href = '/equipment-health' }} />
+            action={{ label: 'Details', fn: () => navigate('/equipment-health') }} />
           <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
             {equipList.length === 0 ? (
               <p className="text-slate-400 text-sm text-center py-8">No equipment data</p>
@@ -331,7 +333,7 @@ export default function Dashboard() {
         <Card className="xl:col-span-2 p-4">
           <SectionHead icon={Activity} title="Sensor Trend Monitoring"
             sub={hasSensorData ? `${trendData.length} readings` : 'No sensor data yet'}
-            action={{ label: 'Sensor Trends', fn: () => window.location.href = '/sensor-trends' }} />
+            action={{ label: 'Sensor Trends', fn: () => navigate('/sensor-trends') }} />
 
           {!hasSensorData ? (
             <div className="text-center py-12">
@@ -389,7 +391,7 @@ export default function Dashboard() {
         {/* Spare Parts */}
         <Card className="p-4">
           <SectionHead icon={Package} title="Spare Parts Status"
-            action={{ label: 'Procurement', fn: () => window.location.href = '/procurement' }} />
+            action={{ label: 'Procurement', fn: () => navigate('/procurement') }} />
 
           {/* Summary counts */}
           <div className="grid grid-cols-3 gap-2 mb-4 text-center">
