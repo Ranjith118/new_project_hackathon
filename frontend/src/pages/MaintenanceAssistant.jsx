@@ -537,7 +537,7 @@ ${liveCtx}`
   const clearChat = () => { setMessages([]); setConvState({}); setActiveIntent(null); setCollectedData({}); };
 
   return (
-    <div className="flex flex-col h-full overflow-hidden">
+    <div className="flex flex-col bg-[#0F1419]" style={{ height: '100%', minHeight: 0 }}>
 
       {/* TOP BAR */}
       <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 bg-[#0F1419] border-b border-[#334155] flex-shrink-0">
@@ -576,8 +576,8 @@ ${liveCtx}`
         </div>
       </div>
 
-      {/* BODY */}
-      <div className="flex flex-col sm:flex-row flex-1 min-h-0 overflow-hidden">
+      {/* BODY — messages scroll, input stays fixed at bottom */}
+      <div className="flex flex-col sm:flex-row flex-1 min-h-0 overflow-hidden relative">
 
         {/* Guidance panel (slide in) */}
         {showGuidance && (
@@ -587,17 +587,17 @@ ${liveCtx}`
         )}
 
         {/* Chat area */}
-        <div className="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
 
           {/* Collection progress */}
           {activeIntent && activeIntent !== 'QUERY' && (
-            <div className="px-4 pt-2 flex-shrink-0">
+            <div className="px-3 sm:px-4 pt-2 flex-shrink-0">
               <CollectionProgress intent={activeIntent} collectedData={collectedData} fields={INTENT_FIELDS[activeIntent]||[]} />
             </div>
           )}
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto min-h-0 px-4 py-3 space-y-3">
+          {/* Messages — scrollable area, padded bottom so last message isn't hidden behind input */}
+          <div className="flex-1 overflow-y-auto px-3 sm:px-4 py-3 space-y-3 pb-4">
             {messages.length === 0 && (
               <div className="flex flex-col items-center justify-start pt-2 text-center space-y-3">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500/20 to-orange-700/20 border border-orange-500/20 flex items-center justify-center">
@@ -717,8 +717,8 @@ ${liveCtx}`
             <div ref={endRef} />
           </div>
 
-          {/* INPUT BAR */}
-          <div className="flex-shrink-0 px-3 sm:px-4 pb-3 pt-2 border-t border-[#334155] bg-[#0F1419]">
+          {/* INPUT BAR — always visible at bottom, never scrolls away */}
+          <div className="flex-shrink-0 px-3 sm:px-4 py-3 border-t border-[#334155] bg-[#0F1419] sticky bottom-0 z-10">
             {uploadMsg && !loading && (
               <div className="text-[10px] text-yellow-400 mb-1.5 px-1">{uploadMsg}</div>
             )}

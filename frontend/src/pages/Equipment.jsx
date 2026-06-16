@@ -516,7 +516,6 @@ export default function Equipment() {
   const [selectedEq, setSelectedEq]     = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteId, setDeleteId]         = useState(null);
-  const [healthMap, setHealthMap]       = useState({});
 
   const [formData, setFormData] = useState({
     equipment_name: '', equipment_type: '', manufacturer: '',
@@ -538,14 +537,6 @@ export default function Equipment() {
         ? list.filter(e => e.equipment_type?.toLowerCase() === filterType.toLowerCase())
         : list;
       setEquipment(filtered);
-
-      // Fetch health for each equipment
-      const healthData = {};
-      await Promise.all(filtered.map(async (eq) => {
-        const h = await get(`/api/anomaly/equipment-health/${encodeURIComponent(eq.equipment_name)}`);
-        if (h) healthData[eq.equipment_id] = h;
-      }));
-      setHealthMap(healthData);
     } catch (e) {
       console.error(e);
     } finally {
@@ -559,7 +550,6 @@ export default function Equipment() {
     operational: equipment.filter(e => e.status === 'operational').length,
     maintenance: equipment.filter(e => e.status === 'maintenance').length,
     failed:      equipment.filter(e => e.status === 'failed').length,
-    critical:    Object.values(healthMap).filter(h => h.health_score < 40).length,
   };
 
   const resetForm = () => setFormData({
@@ -622,13 +612,12 @@ export default function Equipment() {
       </div>
 
       {/* Summary KPI cards */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
-          { label: 'Total',       val: summary.total,       color: 'text-white',    bg: 'bg-slate-500/10 border-slate-500/20' },
-          { label: 'Operational', val: summary.operational, color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20' },
-          { label: 'Maintenance', val: summary.maintenance, color: 'text-yellow-400',bg: 'bg-yellow-500/10 border-yellow-500/20' },
-          { label: 'Failed',      val: summary.failed,      color: 'text-red-400',   bg: 'bg-red-500/10 border-red-500/20' },
-          { label: 'Critical Health', val: summary.critical, color: 'text-orange-400',bg: 'bg-orange-500/10 border-orange-500/20' },
+          { label: 'Total',       val: summary.total,       color: 'text-white',     bg: 'bg-slate-500/10 border-slate-500/20' },
+          { label: 'Operational', val: summary.operational, color: 'text-green-400',  bg: 'bg-green-500/10 border-green-500/20' },
+          { label: 'Maintenance', val: summary.maintenance, color: 'text-yellow-400', bg: 'bg-yellow-500/10 border-yellow-500/20' },
+          { label: 'Failed',      val: summary.failed,      color: 'text-red-400',    bg: 'bg-red-500/10 border-red-500/20' },
         ].map(({ label, val, color, bg }) => (
           <div key={label} className={`rounded-xl border p-4 text-center ${bg}`}>
             <div className={`text-2xl font-heading font-bold ${color}`}>{val}</div>
@@ -678,16 +667,12 @@ export default function Equipment() {
                 <th>Type</th>
                 <th>Manufacturer</th>
                 <th>Installed</th>
-                <th>Health</th>
                 <th>Status</th>
                 <th className="text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
               {equipment.map(eq => {
-                const h = healthMap[eq.equipment_id];
-                const hs = h?.health_score ?? 100;
-                const hc = healthColor(hs);
                 return (
                   <tr key={eq.equipment_id} className="cursor-pointer" onClick={() => setSelectedEq(eq)}>
                     <td>
@@ -701,14 +686,6 @@ export default function Equipment() {
                     <td className="text-slate-400">{eq.equipment_type}</td>
                     <td className="text-slate-400">{eq.manufacturer || '—'}</td>
                     <td className="text-slate-400 font-mono text-xs">{eq.installation_date || '—'}</td>
-                    <td>
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 bg-[#0F1419] rounded-full h-1.5">
-                          <div className="h-1.5 rounded-full" style={{ width: `${hs}%`, backgroundColor: hc }} />
-                        </div>
-                        <span className="text-xs font-mono" style={{ color: hc }}>{hs}%</span>
-                      </div>
-                    </td>
                     <td onClick={e => e.stopPropagation()}>
                       <span className={`flex items-center gap-1.5 w-fit px-2 py-1 rounded border text-xs font-medium ${statusColor(eq.status)}`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${statusDot(eq.status)}`} />

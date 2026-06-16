@@ -145,7 +145,7 @@ export default function Layout() {
     .find(i => i.href === location.pathname)?.name || 'Maintenance Wizard';
 
   return (
-    <div className="min-h-screen flex bg-industrial-bg">
+    <div className={`flex bg-industrial-bg ${isAssistant ? 'h-screen overflow-hidden' : 'min-h-screen'}`}>
 
       {/* ── DESKTOP SIDEBAR (hidden on mobile) ── */}
       <aside className="hidden lg:flex w-64 bg-industrial-bg-secondary border-r border-industrial-border flex-col flex-shrink-0">
@@ -181,7 +181,7 @@ export default function Layout() {
       </aside>
 
       {/* ── MAIN CONTENT AREA ── */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className={`flex flex-col min-w-0 overflow-hidden ${isAssistant ? 'flex-1 h-full' : 'flex-1'}`}>
 
         {/* ── MOBILE TOP BAR ── */}
         <header className="lg:hidden flex items-center justify-between px-4 py-3 bg-[#0F1419] border-b border-industrial-border flex-shrink-0 sticky top-0 z-30">
@@ -213,8 +213,8 @@ export default function Layout() {
         </header>
 
         {/* ── PAGE CONTENT ── */}
-        <main className={`flex-1 min-w-0 overflow-hidden ${isAssistant ? 'flex flex-col' : 'overflow-auto'}`}>
-          <div className={isAssistant ? 'flex-1 overflow-hidden flex flex-col h-full' : 'p-4 lg:p-6'}>
+        <main className={`flex-1 min-w-0 ${isAssistant ? 'overflow-hidden flex flex-col h-full' : 'overflow-auto'}`}>
+          <div className={isAssistant ? 'flex-1 flex flex-col overflow-hidden h-full' : 'p-4 lg:p-6'}>
             <Outlet />
           </div>
         </main>
