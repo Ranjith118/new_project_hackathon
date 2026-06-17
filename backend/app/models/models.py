@@ -3,7 +3,7 @@ import uuid
 from datetime import datetime, date
 from typing import Optional
 
-from sqlalchemy import String, Text, Integer, Float, Date, DateTime
+from sqlalchemy import String, Text, Integer, Float, Date, DateTime, LargeBinary
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql import func
 
@@ -112,6 +112,8 @@ class IntelligentDocument(Base):
     file_path: Mapped[str]          = mapped_column(String(500), nullable=False)
     file_type: Mapped[str]          = mapped_column(String(10), nullable=False)
     file_size: Mapped[int]          = mapped_column(Integer, default=0)
+    # Store binary content in DB so it survives ephemeral disk restarts
+    file_content: Mapped[Optional[bytes]] = mapped_column(LargeBinary, nullable=True)
 
     # AI-classified fields
     document_type: Mapped[Optional[str]]   = mapped_column(String(100), nullable=True)

@@ -60,13 +60,14 @@ async def upload_and_process(
     with open(save_path, "wb") as f:
         f.write(content)
 
-    # Create DB record
+    # Create DB record — store file_content in DB so it survives ephemeral disk restarts
     doc = IntelligentDocument(
         doc_id=doc_id,
         file_name=file.filename,
         file_path=str(save_path),
         file_type=suffix,
         file_size=len(content),
+        file_content=content,
         processing_status="uploaded"
     )
     db.add(doc)
@@ -105,6 +106,13 @@ async def process_document(
     await db.flush()
 
     try:
+        # Restore file to disk from DB content if disk file is missing (ephemeral storage)
+        file_path = Path(doc.file_path)
+        if not file_path.exists() and doc.file_content:
+            file_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(file_path, "wb") as f:
+                f.write(doc.file_content)
+
         # Step 1: Read file
         full_text, page_count = read_file(doc.file_path)
         if not full_text.strip():
@@ -306,8 +314,8 @@ async def get_document(doc_id: str, db: AsyncSession = Depends(get_db)):
 
 @router.get("/documents/{doc_id}/file")
 async def serve_document_file(doc_id: str, db: AsyncSession = Depends(get_db)):
-    """Serve the original uploaded file so the frontend can display/download it."""
-    from fastapi.responses import FileResponse
+    """Serve the original uploaded file — reads from DB content (survives restarts)."""
+    from fastapi.responses import Response, FileResponse
     import mimetypes
 
     result = await db.execute(
@@ -317,20 +325,35 @@ async def serve_document_file(doc_id: str, db: AsyncSession = Depends(get_db)):
     if not doc:
         raise HTTPException(404, "Document not found")
 
-    file_path = Path(doc.file_path)
-    if not file_path.exists():
-        raise HTTPException(404, "File not found on disk. It may have been uploaded in a previous session.")
-
-    # Guess MIME type
-    mime, _ = mimetypes.guess_type(str(file_path))
+    # Determine MIME type
+    mime, _ = mimetypes.guess_type(doc.file_name)
     if not mime:
         mime = "application/octet-stream"
 
-    return FileResponse(
-        path=str(file_path),
-        media_type=mime,
-        filename=doc.file_name,
-        headers={"Content-Disposition": f"inline; filename=\"{doc.file_name}\""}
+    # 1. Try DB content first (always available, survives ephemeral disk)
+    if doc.file_content:
+        return Response(
+            content=doc.file_content,
+            media_type=mime,
+            headers={
+                "Content-Disposition": f'inline; filename="{doc.file_name}"',
+                "Content-Length": str(len(doc.file_content)),
+            }
+        )
+
+    # 2. Fallback to disk file if DB content missing (older uploads before this fix)
+    file_path = Path(doc.file_path)
+    if file_path.exists():
+        return FileResponse(
+            path=str(file_path),
+            media_type=mime,
+            filename=doc.file_name,
+            headers={"Content-Disposition": f'inline; filename="{doc.file_name}"'}
+        )
+
+    raise HTTPException(
+        404,
+        "File not available. Please re-upload the document to restore viewing capability."
     )
 
 
