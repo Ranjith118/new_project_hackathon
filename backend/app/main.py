@@ -16,6 +16,20 @@ async def lifespan(app: FastAPI):
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
+    # ── Run schema migrations for columns added after initial deploy ──
+    try:
+        async with engine.begin() as conn:
+            # Add file_content column to intelligent_documents if it doesn't exist
+            await conn.execute(
+                __import__('sqlalchemy').text(
+                    "ALTER TABLE intelligent_documents ADD COLUMN file_content BLOB"
+                )
+            )
+            print("Migration: added file_content column to intelligent_documents")
+    except Exception:
+        # Column already exists — this is expected on all runs after the first migration
+        pass
+
     # Warm up TF-IDF embedder with existing ChromaDB corpus
     try:
         from app.services.vector_db.chroma_service import get_vector_store
