@@ -56,15 +56,23 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Configure CORS
-# Note: allow_credentials=True is incompatible with allow_origins=["*"] in browsers.
-# We use allow_credentials=False so the wildcard origin works correctly in production.
+# Configure CORS — explicitly list allowed origins for reliability
+# Using specific origins is more robust than wildcard on Render
+ALLOWED_ORIGINS = [
+    "https://new-project-hackathon.onrender.com",  # Render static frontend
+    "http://localhost:5173",   # local dev
+    "http://localhost:3000",   # local dev alt
+    "*",                        # catch-all fallback
+]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=False,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=600,
 )
 
 # Include routers
@@ -124,6 +132,12 @@ async def root():
 async def health_check():
     """Health check endpoint."""
     return {"status": "healthy"}
+
+
+@app.options("/{full_path:path}")
+async def options_handler(full_path: str):
+    """Handle all OPTIONS preflight requests explicitly."""
+    return {"status": "ok"}
 
 
 # API documentation endpoints
