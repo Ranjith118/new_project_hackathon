@@ -3,7 +3,7 @@ import {
   Upload, FileText, Brain, Search, Trash2,
   CheckCircle, Clock, AlertCircle, ChevronLeft,
   Shield, Wrench, Package, Activity, Send,
-  AlertTriangle, Settings, Eye, FileSearch
+  AlertTriangle, Settings, Eye, FileSearch, ExternalLink, Download
 } from 'lucide-react';
 import {
   AreaChart, Area, Tooltip, ResponsiveContainer
@@ -191,6 +191,7 @@ function DocDetail({ doc, onBack }) {
 
   const TABS = [
     { label: 'Summary' },
+    { label: 'View File' },
     { label: 'Fault Modes',  count: k.fault_modes ? k.fault_modes.length : 0 },
     { label: 'Maintenance',  count: k.maintenance_tasks ? k.maintenance_tasks.length : 0 },
     { label: 'Spare Parts',  count: k.spare_parts ? k.spare_parts.length : 0 },
@@ -225,12 +226,34 @@ function DocDetail({ doc, onBack }) {
               </div>
             </div>
           </div>
-          <span className={`flex items-center gap-1.5 px-2 py-1 rounded border text-xs ${SC[doc.processing_status] || SC.uploaded}`}>
-            {doc.processing_status === 'completed' && <CheckCircle className="w-3 h-3" />}
-            {doc.processing_status === 'processing' && <Clock className="w-3 h-3 animate-spin" />}
-            {doc.processing_status === 'failed' && <AlertCircle className="w-3 h-3" />}
-            {doc.processing_status}
-          </span>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className={`flex items-center gap-1.5 px-2 py-1 rounded border text-xs ${SC[doc.processing_status] || SC.uploaded}`}>
+              {doc.processing_status === 'completed' && <CheckCircle className="w-3 h-3" />}
+              {doc.processing_status === 'processing' && <Clock className="w-3 h-3 animate-spin" />}
+              {doc.processing_status === 'failed' && <AlertCircle className="w-3 h-3" />}
+              {doc.processing_status}
+            </span>
+            {/* View / Download original file */}
+            <a
+              href={`${API}/documents/${doc.doc_id}/file`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-500/10 border border-blue-500/30 text-blue-400 hover:bg-blue-500/20 rounded-lg text-xs font-medium transition-colors"
+              title="View original file"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              View File
+            </a>
+            <a
+              href={`${API}/documents/${doc.doc_id}/file`}
+              download={doc.file_name}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-500/10 border border-slate-500/30 text-slate-400 hover:bg-slate-500/20 rounded-lg text-xs font-medium transition-colors"
+              title="Download original file"
+            >
+              <Download className="w-3.5 h-3.5" />
+              Download
+            </a>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5 pt-5 border-t border-[#334155]">
@@ -270,8 +293,7 @@ function DocDetail({ doc, onBack }) {
             ))}
           </div>
 
-          {activeTab === 0 && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          {activeTab === 0 && (            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
               <div className="lg:col-span-2 space-y-4">
                 {[
                   { label: 'Executive Summary',   text: s.executive },
@@ -316,7 +338,58 @@ function DocDetail({ doc, onBack }) {
             </div>
           )}
 
+          {/* Tab 1 — View File (PDF/doc inline viewer) */}
           {activeTab === 1 && (
+            <div className="space-y-3">
+              {doc.file_type === '.pdf' ? (
+                <Card className="p-0 overflow-hidden">
+                  <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#334155] bg-[#0F1419]">
+                    <span className="text-sm text-white font-medium flex items-center gap-2">
+                      <FileText className="w-4 h-4 text-orange-400" /> {doc.file_name}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <a href={`${API}/documents/${doc.doc_id}/file`} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-1 px-3 py-1 bg-blue-500/10 border border-blue-500/30 text-blue-400 hover:bg-blue-500/20 rounded-lg text-xs transition-colors">
+                        <ExternalLink className="w-3 h-3" /> Open in new tab
+                      </a>
+                      <a href={`${API}/documents/${doc.doc_id}/file`} download={doc.file_name}
+                        className="flex items-center gap-1 px-3 py-1 bg-slate-500/10 border border-slate-500/30 text-slate-400 hover:bg-slate-500/20 rounded-lg text-xs transition-colors">
+                        <Download className="w-3 h-3" /> Download
+                      </a>
+                    </div>
+                  </div>
+                  <iframe
+                    src={`${API}/documents/${doc.doc_id}/file`}
+                    title={doc.file_name}
+                    className="w-full"
+                    style={{ height: '75vh', border: 'none', background: '#fff' }}
+                  />
+                </Card>
+              ) : (
+                <Card className="p-8 text-center space-y-4">
+                  <FileText className="w-12 h-12 text-slate-600 mx-auto" />
+                  <div>
+                    <p className="text-white font-medium">{doc.file_name}</p>
+                    <p className="text-slate-400 text-sm mt-1">
+                      Inline preview is only available for PDF files.
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-center gap-3">
+                    <a href={`${API}/documents/${doc.doc_id}/file`} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/30 text-blue-400 hover:bg-blue-500/20 rounded-lg text-sm transition-colors">
+                      <ExternalLink className="w-4 h-4" /> Open File
+                    </a>
+                    <a href={`${API}/documents/${doc.doc_id}/file`} download={doc.file_name}
+                      className="flex items-center gap-2 px-4 py-2 bg-slate-500/10 border border-slate-500/30 text-slate-400 hover:bg-slate-500/20 rounded-lg text-sm transition-colors">
+                      <Download className="w-4 h-4" /> Download
+                    </a>
+                  </div>
+                </Card>
+              )}
+            </div>
+          )}
+
+          {activeTab === 2 && (
             <div className="space-y-3">
               {k.fault_modes && k.fault_modes.length > 0 ? k.fault_modes.map((f, i) => (
                 <Card key={i} className="p-4 border-l-4 border-l-red-500">
@@ -339,7 +412,7 @@ function DocDetail({ doc, onBack }) {
             </div>
           )}
 
-          {activeTab === 2 && (
+          {activeTab === 3 && (
             <div className="space-y-4">
               {k.maintenance_tasks && k.maintenance_tasks.length > 0 && (
                 <div className="space-y-3">
@@ -394,7 +467,7 @@ function DocDetail({ doc, onBack }) {
             </div>
           )}
 
-          {activeTab === 3 && (
+          {activeTab === 4 && (
             <div>
               {k.spare_parts && k.spare_parts.length > 0 ? (
                 <Card className="overflow-hidden">
@@ -425,7 +498,7 @@ function DocDetail({ doc, onBack }) {
             </div>
           )}
 
-          {activeTab === 4 && (
+          {activeTab === 5 && (
             <div className="space-y-3">
               {k.safety_instructions && k.safety_instructions.length > 0 ? (
                 <Card className="p-5">
@@ -464,7 +537,7 @@ function DocDetail({ doc, onBack }) {
             </div>
           )}
 
-          {activeTab === 5 && (
+          {activeTab === 6 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {k.sensor_thresholds && Object.values(k.sensor_thresholds).some(Boolean) && (
                 <Card className="p-4">
@@ -715,10 +788,31 @@ export default function DocumentIntelligence() {
                         <td className="text-right" onClick={e => e.stopPropagation()}>
                           <div className="flex items-center justify-end gap-1">
                             <button onClick={() => setSelectedDoc(doc)}
+                              title="View extracted knowledge"
                               className="p-1.5 text-blue-400 hover:bg-blue-500/20 rounded transition-colors">
                               <Eye className="w-3.5 h-3.5" />
                             </button>
+                            <a
+                              href={`${API}/documents/${doc.doc_id}/file`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title="View original file"
+                              onClick={e => e.stopPropagation()}
+                              className="p-1.5 text-green-400 hover:bg-green-500/20 rounded transition-colors"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
+                            <a
+                              href={`${API}/documents/${doc.doc_id}/file`}
+                              download={doc.file_name}
+                              title="Download file"
+                              onClick={e => e.stopPropagation()}
+                              className="p-1.5 text-slate-400 hover:bg-slate-500/20 rounded transition-colors"
+                            >
+                              <Download className="w-3.5 h-3.5" />
+                            </a>
                             <button onClick={() => deleteDoc(doc.doc_id)}
+                              title="Delete document"
                               className="p-1.5 text-red-400 hover:bg-red-500/20 rounded transition-colors">
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>

@@ -304,6 +304,36 @@ async def get_document(doc_id: str, db: AsyncSession = Depends(get_db)):
     }
 
 
+@router.get("/documents/{doc_id}/file")
+async def serve_document_file(doc_id: str, db: AsyncSession = Depends(get_db)):
+    """Serve the original uploaded file so the frontend can display/download it."""
+    from fastapi.responses import FileResponse
+    import mimetypes
+
+    result = await db.execute(
+        select(IntelligentDocument).where(IntelligentDocument.doc_id == doc_id)
+    )
+    doc = result.scalar_one_or_none()
+    if not doc:
+        raise HTTPException(404, "Document not found")
+
+    file_path = Path(doc.file_path)
+    if not file_path.exists():
+        raise HTTPException(404, "File not found on disk. It may have been uploaded in a previous session.")
+
+    # Guess MIME type
+    mime, _ = mimetypes.guess_type(str(file_path))
+    if not mime:
+        mime = "application/octet-stream"
+
+    return FileResponse(
+        path=str(file_path),
+        media_type=mime,
+        filename=doc.file_name,
+        headers={"Content-Disposition": f"inline; filename=\"{doc.file_name}\""}
+    )
+
+
 @router.delete("/documents/{doc_id}")
 async def delete_document(doc_id: str, db: AsyncSession = Depends(get_db)):
     """Delete document, its knowledge, and vector DB chunks."""
