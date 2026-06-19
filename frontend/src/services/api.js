@@ -11,18 +11,18 @@ const api = axios.create({
 
 // Equipment API
 export const equipmentAPI = {
-  getAll: (params = {}) => api.get('/api/equipment', { params }),
+  getAll: (params = {}) => api.get('/api/equipment/', { params }),
   getById: (id) => api.get(`/api/equipment/${id}`),
-  create: (data) => api.post('/api/equipment', data),
+  create: (data) => api.post('/api/equipment/', data),
   update: (id, data) => api.put(`/api/equipment/${id}`, data),
   delete: (id) => api.delete(`/api/equipment/${id}`),
 };
 
 // Maintenance Logs API
 export const maintenanceLogsAPI = {
-  getAll: (params = {}) => api.get('/api/maintenance-logs', { params }),
+  getAll: (params = {}) => api.get('/api/maintenance-logs/', { params }),
   getById: (id) => api.get(`/api/maintenance-logs/${id}`),
-  create: (data) => api.post('/api/maintenance-logs', data),
+  create: (data) => api.post('/api/maintenance-logs/', data),
   update: (id, data) => api.put(`/api/maintenance-logs/${id}`, data),
   delete: (id) => api.delete(`/api/maintenance-logs/${id}`),
 };
@@ -38,9 +38,9 @@ export const sensorDataAPI = {
 
 // Failure Reports API
 export const failureReportsAPI = {
-  getAll: (params = {}) => api.get('/api/failure-reports', { params }),
+  getAll: (params = {}) => api.get('/api/failure-reports/', { params }),
   getById: (id) => api.get(`/api/failure-reports/${id}`),
-  create: (data) => api.post('/api/failure-reports', data),
+  create: (data) => api.post('/api/failure-reports/', data),
   update: (id, data) => api.put(`/api/failure-reports/${id}`, data),
   delete: (id) => api.delete(`/api/failure-reports/${id}`),
 };
